@@ -1,0 +1,29 @@
+{% extends "layouts/layout1.html" %}
+{% block title %}
+Our custom title
+{% endblock %}
+{% block content %}
+
+
+<header>
+    <section class="success" id="home">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <img class="img-responsive" src="static/data/test/defective/one.jpg" alt="" height="42" width="42">
+                <div class="intro-text">
+                	<h1> Classification Result </h1>
+                	<h1>This ball bearing is </h1>
+                	<h1 style="color:Tomato;">{{prediction}}</h1>
+           
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+</header>
+{% endblock %}
+
+   
+
+ 
