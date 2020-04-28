@@ -2,7 +2,6 @@ from flask import Flask
 from flask import request, redirect, url_for, render_template
 from flask_security import Security, SQLAlchemyUserDatastore, UserMixin, RoleMixin, login_required
 
-
 app = Flask(__name__)
 #app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://postgres:pgadmin@localhost/defect_detection'
 app.config['SECRET_KEY'] = 'super-secret'
@@ -51,11 +50,14 @@ def index():
 def profile(email):
     user = User.query.filter_by(email=email).first()
     return render_template('profile.html', user=user)
-
+image_path = 'static/input/'
 @app.route('/predict',methods=['POST'])
 def predict():
+    import os
     model_input = request.form.get("input_image")
-    # print(model_input)
+    print(model_input)
+    image_name = os.path.join(image_path,model_input)
+    print(image_name)
     from tensorflow.keras.preprocessing.image import ImageDataGenerator
     from tensorflow.keras.models import Sequential
     from tensorflow.keras.layers import Convolution2D as Con2D,MaxPooling2D
@@ -150,7 +152,7 @@ def predict():
 
     # Loading image
     #os.chdir('E:/code/2018/opencv-python/lung_code_python/TestImages');   ## change here the test image path
-    img = cv2.imread("static/data/test/defective/one.jpg")
+    img = cv2.imread(image_name)
     import os
     # print(os.path.exists('project/data/test/defective/one.jpg'))
     #os.chdir('E:/code/2018/opencv-python/lung_code_python');## change here to original code path
@@ -220,7 +222,7 @@ def predict():
     else:
         prediction="non-defective"
     print(prediction)
-    return render_template("result.html",rslt=rslt,prediction=prediction)
+    return render_template("result.html",rslt=rslt,prediction=prediction,name=model_input)
 
 
 
